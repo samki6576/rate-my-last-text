@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Nosifer&family=Rubik+Glitch&family=JetBrains+Mono:wght@400;700&display=swap');
+@import "tailwindcss";
+
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "Nosifer", cursive;
+  --font-glitch: "Rubik Glitch", cursive;
+}
+
+@layer base {
+  body {
+    @apply bg-black text-white overflow-x-hidden;
+    background-image: 
+      linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-attachment: fixed;
+    animation: grid-move 20s linear infinite;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-black;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-cyan-500 shadow-[0_0_10px_#00ffff];
+  }
+}
+
+@keyframes grid-move {
+  0% { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes glitch-skew {
+  0% { transform: skew(0deg); }
+  10% { transform: skew(3deg); }
+  20% { transform: skew(-3deg); }
+  30% { transform: skew(0deg); }
+  100% { transform: skew(0deg); }
+}
+
+@keyframes crt-flicker {
+  0% { opacity: 0.95; }
+  5% { opacity: 0.9; }
+  10% { opacity: 0.95; }
+  15% { opacity: 0.85; }
+  20% { opacity: 0.95; }
+  100% { opacity: 1; }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+.glitch-text {
+  animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
+  text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff;
+}
+
+.scanlines {
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+}
+
+.crt-overlay::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(18, 16, 16, 0.1);
+  opacity: 0;
+  z-index: 100;
+  pointer-events: none;
+  animation: crt-flicker 0.15s infinite;
+}
+
+.neon-border {
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 10px #00ffff, inset 0 0 5px #00ffff;
+}
+
+.neon-border-pink {
+  border: 2px solid #ff00ff;
+  box-shadow: 0 0 15px #ff00ff, inset 0 0 5px #ff00ff;
+}
+
+@keyframes random-glitch-anim {
+  0% { transform: translate(0); clip-path: inset(0 0 0 0); }
+  10% { transform: translate(-5px, -5px); clip-path: inset(10% 0 80% 0); }
+  20% { transform: translate(5px, 5px); clip-path: inset(30% 0 50% 0); }
+  30% { transform: translate(-5px, 0); clip-path: inset(50% 0 30% 0); }
+  40% { transform: translate(0, 5px); clip-path: inset(80% 0 10% 0); }
+  50% { transform: translate(5px, -5px); clip-path: inset(0 0 0 0); }
+  100% { transform: translate(0); clip-path: inset(0 0 0 0); }
+}
+
+.glitch-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 255, 255, 0.1);
+  mix-blend-mode: color-dodge;
+  z-index: 999;
+  pointer-events: none;
+  animation: random-glitch-anim 0.2s steps(2, end) infinite;
+}
+
+.glitch-flash::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 0, 255, 0.1);
+  mix-blend-mode: color-dodge;
+  animation: random-glitch-anim 0.2s steps(2, end) infinite reverse;
+}
+
+.shaking:hover {
+  animation: glitch 0.1s infinite;
+}
