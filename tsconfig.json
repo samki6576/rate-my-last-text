@@ -11,7 +11,9 @@
     ],
     "skipLibCheck": true,
     "moduleResolution": "bundler",
+    "typeRoots": ["./node_modules/@types"],
     "types": ["node", "react", "react-dom"],
+
 
     "isolatedModules": true,
     "moduleDetection": "force",
